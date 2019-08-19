@@ -1,0 +1,174 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Times New Roman;}{\f1\fnil\fcharset2 Symbol;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\qc\lang9\b\f0\fs36 CODE QUALITY TOOLS\par
+\pard\sa200\sl276\slmult1\par
+\fs28 What is Code Quality?\par
+\b0\tab\fs24 Code quality is rather a group of different attributes and requirements, determined and prioritized by our business. \par
+\b\fs28 What does high-quality code mean?\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0\fs24 you can read once and understand\par
+{\pntext\f1\'B7\tab}has minimal bugs\par
+{\pntext\f1\'B7\tab}follows the standards of the language it\rquote s written in\par
+{\pntext\f1\'B7\tab}does what you expect it to do, and has proof of its success\fs28\par
+\pard\sa200\sl276\slmult1\b How to measure the code quality?\par
+\b0\tab\fs24 Code quality can be measured in a number of different ways, but some of the most important aspects are:\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b Readability, consistency \b0\emdash  how easy it is to read and understand sections of the code; this includes code clarity, simplicity, and documentation.\par
+\b{\pntext\f1\'B7\tab}Predictability, reliability, and robustness \b0\emdash  software behavior should be predictable, and not prone to hidden bugs.\par
+\b{\pntext\f1\'B7\tab}Maintainability and extensibility \b0\emdash  fixing, updating and improving software should be as simple as possible, not inherently complex.\par
+\pard\sa200\sl276\slmult1\b\fs28 Effective tips for improving the code quality\par
+\fs24 1. Follow a style\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0 Use informative names for variables, functions, and classes. There is no reason to be clever or sly by naming things with a small handful of characters.\par
+{\pntext\f1\'B7\tab}Break your code into pieces where it makes sense.\par
+{\pntext\f1\'B7\tab}Keep functions focused on a particular function.\par
+{\pntext\f1\'B7\tab}Remain consistent with whitespace, naming, commenting, and the other rules you establish.\par
+\pard\sa200\sl276\slmult1\b 2. Find developers to code review your work\par
+\b0 Review code with your fellow developers to help fix potential long-term issues and learn new things.\par
+\b 3. Review other people\rquote s [great] code\par
+\b0 Seeing how other people manage their project is a great way to learn. So review other people's code and get ideas to improve the quality of your code.\par
+\b 4. Write unit tests that cover your model, then move to your interface\par
+\b0 Writing tests have the added benefit of helping you uncover code design issues.\par
+\b 5. Avoid duplicating code\par
+\b0 If you have a lot of shared code, move it into a shared library don't duplicate the code.\par
+\b 6. Avoid commenting for the sake of it\par
+\b0 Document the codebase where situations become complex. It\rquote ll make your life easier as you return to the area months later. You don\rquote t need to comment every single function that exists within your codebase. Your function names should reveal the obvious goal.\par
+\b 7. Maintain an expectation of Excellence\par
+\b0 Expect excellence by creating coding standards and applying those standards consistently. Establish a structure that is a fine balance of excellence and respect.\par
+\b\fs28 Code Review Tools\par
+\b0\fs24 1. Checkstyle\par
+2. PMD\par
+3. FindBugs\par
+\b\fs28 CHECKSTYLE\par
+\b0\fs24\tab Checkstyle is a development tool to help you ensure that your Java code adheres to a set of coding standards. Checkstyle does this by inspecting your Java source code and pointing out items that deviate from a defined set of coding rules. With the Checkstyle Plugin your code is constantly inspected for problems. \par
+\tab Here are somethings that Checkstyle will catch:\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Missing/Improper Javadoc\fs28\par
+\fs24{\pntext\f1\'B7\tab}Whitespace\fs28\par
+\fs24{\pntext\f1\'B7\tab}Placement of braces and parantheses\fs28\par
+\fs24{\pntext\f1\'B7\tab}Line length\fs28\par
+\fs24{\pntext\f1\'B7\tab}Naming conventions\fs28\par
+\pard\sa200\sl276\slmult1\b\fs24 Checkstyle integration with Jenkins pipeline\par
+\b0 Step 1: Include the checkstyle plugin in the \b\i build.gradle\b0\i0  file of a Gradle project.\par
+\i plugins \{\par
+    id 'checkstyle'\par
+\}\par
+\i0 The plugin adds a number of tasks to the project that perform the quality checks. You can execute the checks by running \b gradle check\b0 .\par
+Step 2: Create a folder \b checkstyle\b0  inside the root folder.\par
+<root>\par
+\u9492?\u9472?\u9472? config\par
+    \u9492?\u9472?\u9472? checkstyle           // (1)\par
+        \u9492?\u9472?\u9472? checkstyle.xml   // (2)\par
+        \u9492?\u9472?\u9472? suppressions.xml\par
+1. Checkstyle configuration files go here\par
+2. Primary Checkstyle configuration file\par
+The default structure to give the configuration file is defined above. To customise the location of the configuration file use the below code in build.gradle.\par
+\i checkstyle \{\par
+\tab\tab configFile = rootProject.file('config/checkstyle/checkstyle.xml')\par
+\tab\tab toolVersion = '7.3'\par
+\tab\}\par
+\i0 Step 3: Add the Checkstyle plugin in Jenkins by\par
+\tab Manage Jenkins -> Manage Plugins -> Available -> Checkstyle\par
+Step 4: Click on Open Blue Ocean and create a new pipeline.\par
+Step 5: Add the following steps\par
+\tab 1. Create a step \b Windows Batch Command \b0 and give\b  gradle check.\par
+\tab\b0 2. Add a step \b Publish Checkstyle analysis results \b0 and give the pattern as **/*.xml \tab to generate the report for checkstyle.\par
+Step 6: Save and run the pipeline.\b\i\par
+\i0\fs28 PMD\par
+\b0\fs24\tab PMD is a static Java source code analysis tool, similar in concept to Checkstyle, FindBugs and Coverity. It searches Java code for inefficient code, bugs, common coding problems, and other such issues. PMD can be used in the development environment through IDE integrations, or it can be incorporated directly into an Gradle, Ant or Maven build. PMD uses rules to perform the source code analysis, and the rules are grouped into rulesets. \par
+\tab To name a few,\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Empty try/catch blocks\par
+{\pntext\f1\'B7\tab}Over-complicated expressions\par
+{\pntext\f1\'B7\tab}Using .equals() instead of '=='\par
+{\pntext\f1\'B7\tab}Unused variables and imports\par
+{\pntext\f1\'B7\tab}Unneccessary loops and if statements\par
+{\pntext\f1\'B7\tab}Enforce naming conventions\par
+\pard\sa200\sl276\slmult1\b PMD integration with Jenkins pipeline\par
+\b0 Step 1: Include the checkstyle plugin in the \b\i build.gradle\b0\i0  file of a Gradle project.\par
+\i plugins \{\par
+    id 'pmd'\par
+\}\par
+\i0 The plugin adds a number of tasks to the project that perform the quality checks. You can execute the checks by running \b gradle check\b0 .\par
+Step 2: Add the ruleSets for pmd in the \b build.gradle\b0 .\par
+\i pmd \{\par
+ ignoreFailures = true\par
+  pmdTest.enabled=false\par
+  ruleSets = [\par
+          'java-basic',\par
+          'java-braces',\par
+          'java-clone',\par
+          'java-codesize',\par
+          'java-comments',\par
+          'java-controversial',\par
+          'java-coupling',\par
+          'java-design',\par
+          'java-empty',\par
+          'java-finalizers',\par
+          'java-imports',\par
+          'java-optimizations',\par
+          'java-strictexception',\par
+          'java-strings',\par
+          'java-typeresolution',\par
+          'java-unnecessary',\par
+          'java-unusedcode'\par
+  ]\par
+\}\par
+\i0 Step 3: Add the PMD plugin in Jenkins by\par
+\tab Manage Jenkins -> Manage Plugins -> Available -> PMD\par
+Step 4: Click on Open Blue Ocean and create a new pipeline.\par
+Step 5: Add the following steps\par
+\tab 1. Create a step \b Windows Batch Command \b0 and give\b  gradle check.\par
+\tab\b0 2. Add a step \b Publish PMD analysis results \b0 and give the pattern as **/*.xml \tab to generate the report for checkstyle.\par
+Step 6: Save and run the pipeline.\par
+\b\fs28 FINDBUGS\par
+\b0\tab\fs24 Findbugs is an open source tool for static code analysis of Java programs. It scans byte code for so called bug pattern to find defects and/or suspicious code. Although Findbugs needs the compiled class files it is not necessary to execute the code for the analysis.\par
+\tab Findbugs can find things like\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Improper use of .equals() amd .hashCode()\i\par
+\i0{\pntext\f1\'B7\tab}Unsafe casts\i\par
+\i0{\pntext\f1\'B7\tab}When something will always be null\i\par
+\i0{\pntext\f1\'B7\tab}Possible StackOverflows\i\par
+\i0{\pntext\f1\'B7\tab}Possible ignored exceptions\i\par
+\pard\sa200\sl276\slmult1\i0\tab Findbugs classifies the errors into the following categories:\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Bad practice\i\par
+\i0{\pntext\f1\'B7\tab}Correctness\i\par
+\i0{\pntext\f1\'B7\tab}Dodgy\i\par
+\i0{\pntext\f1\'B7\tab}Experimental \i\par
+\i0{\pntext\f1\'B7\tab}Internationalization\i\par
+\i0{\pntext\f1\'B7\tab}Malicious code vulnerability\i\par
+\i0{\pntext\f1\'B7\tab}Multithreaded correctness\i\par
+\i0{\pntext\f1\'B7\tab}Performance\i\par
+\i0{\pntext\f1\'B7\tab}Security\i\par
+\pard\sa200\sl276\slmult1\b\i0 Findbugs integration with Jenkins pipeline\par
+\b0 Step 1: Include the checkstyle plugin in the \b\i build.gradle\b0\i0  file of a Gradle project.\par
+\i plugins \{\par
+    id 'findbugs'\par
+\}\par
+\i0 The plugin adds a number of tasks to the project that perform the quality checks. You can execute the checks by running \b gradle check\b0 .\par
+Step 2: Add the following in the \b build.gradle\b0 .\par
+\i task findSecurityBugs(type: FindBugs) \{\par
+\par
+classes = fileTree(project.rootDir.absolutePath).include("**/*.class");\par
+source = fileTree(project.rootDir.absolutePath).include("**/*.java");\par
+classpath = files()\par
+pluginClasspath = project.configurations.findbugsPlugins\par
+\par
+findbugs \{\par
+    toolVersion = "3.0.1"\par
+    sourceSets = [sourceSets.main] // [sourceSets.main] for Java project\par
+    ignoreFailures = true\par
+    reportsDir = file("$project.buildDir/findbugsReports")\par
+    effort = "max"\par
+    reportLevel = "low"\par
+ //   includeFilter = file("$rootProject.projectDir/fsb-include.xml")\par
+//    excludeFilter = file("$rootProject.projectDir/fsb-exclude.xml")\par
+\}\par
+\}\i0\par
+Step 3: Add the Findbugs plugin in Jenkins by\par
+\tab Manage Jenkins -> Manage Plugins -> Available -> Findbugs\par
+Step 4: Click on Open Blue Ocean and create a new pipeline.\par
+Step 5: Add the following steps\par
+\tab 1. Create a step \b Windows Batch Command \b0 and give\b  gradle check.\par
+\tab\b0 2. Add a step \b Publish Findbugs analysis results \b0 and give the pattern as **/*.xml \tab to generate the report for checkstyle.\par
+Step 6: Save and run the pipeline.\par
+\par
+\par
+\par
+\fs28\par
+\fs22\par
+}
+ 
